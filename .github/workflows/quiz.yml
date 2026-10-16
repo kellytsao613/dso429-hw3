@@ -2,10 +2,10 @@ name: Answer quiz rounds
 
 on:
   schedule:
-    # Twice an hour (UTC). GitHub sometimes starts scheduled runs late,
-    # so two runs an hour keeps every round well inside the 3-hour full-credit window.
-    - cron: "7,37 * * * *"
-  workflow_dispatch: {}   # adds a "Run workflow" button on the Actions tab
+    # GitHub often starts scheduled runs late or skips them, so check every 10 minutes.
+    # Off the top of the hour, when GitHub is busiest. Runs with nothing new finish in seconds.
+    - cron: "3,13,23,33,43,53 * * * *"
+  workflow_dispatch: {} # adds a "Run workflow" button on the Actions tab
 
 permissions:
   contents: write
@@ -16,7 +16,8 @@ concurrency:
 
 jobs:
   answer:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moves to Ubuntu 26 on Oct 19, 2026, which could break the Python setup.
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
@@ -43,9 +44,41 @@ jobs:
             echo "No new answers."
             exit 0
           fi
-          git commit -m "Answer rounds $(date -u +'%Y-%m-%d %H:%M UTC')"
+          msg="Answer rounds $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git commit -q -m "$msg"
+
+          # Keep a copy of this run's files so they can be re-applied if main moved meanwhile.
+          rm -rf /tmp/mine && mkdir -p /tmp/mine
+          cp -r answers logs /tmp/mine/
+          git show HEAD~1:logs/status.json > /tmp/mine/base_status.json 2>/dev/null || echo "{}" > /tmp/mine/base_status.json
+          changed=$(git diff --name-only HEAD~1 HEAD)
+
           for i in 1 2 3 4 5; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
-            sleep 15
+            git push origin HEAD:main && exit 0
+            echo "Push rejected because main moved. Re-applying this run's answers on top of the latest main (try $i)."
+            sleep $((i * 10))
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            for f in $changed; do
+              [ "$f" = "logs/status.json" ] && continue
+              mkdir -p "$(dirname "$f")"
+              cp "/tmp/mine/$f" "$f"
+            done
+            # Merge status.json: keep main's entries, add the rounds this run changed.
+          python - <<'EOF'
+          import json, pathlib
+          p = pathlib.Path("logs/status.json")
+          merged = json.loads(p.read_text()) if p.exists() else {}
+          mine = json.loads(pathlib.Path("/tmp/mine/logs/status.json").read_text())
+          base = json.loads(pathlib.Path("/tmp/mine/base_status.json").read_text())
+          merged.update({k: v for k, v in mine.items() if base.get(k) != v})
+          p.write_text(json.dumps(merged, indent=2, sort_keys=True))
+          EOF
+            git add answers logs
+            if git diff --cached --quiet; then
+              echo "main already has these answers."
+              exit 0
+            fi
+            git commit -q -m "$msg"
           done
           exit 1
