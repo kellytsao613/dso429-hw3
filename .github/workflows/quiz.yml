@@ -1,14 +1,17 @@
 name: Answer quiz rounds
 
+# GitHub's scheduler skips most runs on this repo, so it can't be trusted on its own.
+# Instead, each run stays alive for about 5.5 hours, checking for new rounds every 5 minutes,
+# then starts the next run itself. The hourly schedule is only a backup in case the chain breaks.
+# To stop the bot: cancel the running workflow on the Actions tab (a cancelled run does not restart itself).
 on:
   schedule:
-    # GitHub often starts scheduled runs late or skips them, so check every 10 minutes.
-    # Off the top of the hour, when GitHub is busiest. Runs with nothing new finish in seconds.
-    - cron: "3,13,23,33,43,53 * * * *"
+    - cron: "17 * * * *"
   workflow_dispatch: {} # adds a "Run workflow" button on the Actions tab
 
 permissions:
   contents: write
+  actions: write # lets a run start the next one
 
 concurrency:
   group: quiz
@@ -18,7 +21,7 @@ jobs:
   answer:
     # Pinned: ubuntu-latest moves to Ubuntu 26 on Oct 19, 2026, which could break the Python setup.
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
 
@@ -26,45 +29,41 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Answer new rounds
+      - name: Answer new rounds every 5 minutes
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CHECK_PRACTICE: "1"
           # Skip gemini-3.8-flash: it keeps returning "high demand" errors and slows every round down.
           GEMINI_MODELS: "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash"
-        run: python solve.py
-
-      - name: Commit and push answers
-        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add answers logs
-          if git diff --cached --quiet; then
-            echo "No new answers."
-            exit 0
-          fi
-          msg="Answer rounds $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git commit -q -m "$msg"
 
-          # Keep a copy of this run's files so they can be re-applied if main moved meanwhile.
-          rm -rf /tmp/mine && mkdir -p /tmp/mine
-          cp -r answers logs /tmp/mine/
-          git show HEAD~1:logs/status.json > /tmp/mine/base_status.json 2>/dev/null || echo "{}" > /tmp/mine/base_status.json
-          changed=$(git diff --name-only HEAD~1 HEAD)
-
-          for i in 1 2 3 4 5; do
-            git push origin HEAD:main && exit 0
-            echo "Push rejected because main moved. Re-applying this run's answers on top of the latest main (try $i)."
-            sleep $((i * 10))
-            git fetch -q origin main
-            git reset -q --hard origin/main
-            for f in $changed; do
-              [ "$f" = "logs/status.json" ] && continue
-              mkdir -p "$(dirname "$f")"
-              cp "/tmp/mine/$f" "$f"
-            done
-            # Merge status.json: keep main's entries, add the rounds this run changed.
+          # Commit this pass's answers and push. If main moved meanwhile, re-apply this
+          # pass's files on top of the latest main and merge status.json.
+          push_answers() {
+            git add answers logs
+            if git diff --cached --quiet; then
+              echo "No new answers."
+              return 0
+            fi
+            msg="Answer rounds $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git commit -q -m "$msg"
+            rm -rf /tmp/mine && mkdir -p /tmp/mine
+            cp -r answers logs /tmp/mine/
+            git show HEAD~1:logs/status.json > /tmp/mine/base_status.json 2>/dev/null || echo "{}" > /tmp/mine/base_status.json
+            changed=$(git diff --name-only HEAD~1 HEAD)
+            for i in 1 2 3 4 5; do
+              git push -q origin HEAD:main && echo "Pushed." && return 0
+              echo "Push rejected because main moved. Re-applying this pass's answers (try $i)."
+              sleep $((i * 10))
+              git fetch -q origin main
+              git reset -q --hard origin/main
+              for f in $changed; do
+                [ "$f" = "logs/status.json" ] && continue
+                mkdir -p "$(dirname "$f")"
+                cp "/tmp/mine/$f" "$f"
+              done
           python - <<'EOF'
           import json, pathlib
           p = pathlib.Path("logs/status.json")
@@ -74,11 +73,30 @@ jobs:
           merged.update({k: v for k, v in mine.items() if base.get(k) != v})
           p.write_text(json.dumps(merged, indent=2, sort_keys=True))
           EOF
-            git add answers logs
-            if git diff --cached --quiet; then
-              echo "main already has these answers."
-              exit 0
-            fi
-            git commit -q -m "$msg"
+              git add answers logs
+              if git diff --cached --quiet; then
+                echo "main already has these answers."
+                return 0
+              fi
+              git commit -q -m "$msg"
+            done
+            # Give up for this pass and resync; missing rounds get answered again next pass.
+            git fetch -q origin main && git reset -q --hard origin/main
+            return 1
+          }
+
+          end=$(( $(date +%s) + 330 * 60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            echo "=== pass at $(date -u +'%H:%M UTC') ==="
+            git fetch -q origin main && git merge -q --ff-only origin/main || echo "Could not fast-forward; continuing."
+            python solve.py || echo "solve.py failed this pass; trying again in 5 minutes."
+            push_answers || echo "Push failed this pass; trying again in 5 minutes."
+            sleep 300
           done
-          exit 1
+
+      - name: Start the next run
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run quiz.yml --ref main
