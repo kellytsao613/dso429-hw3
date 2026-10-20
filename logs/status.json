@@ -146,6 +146,14 @@
       "AI + calculator agree": 25
     }
   },
+  "115": {
+    "ai_error": false,
+    "guessed": 0,
+    "model": "gemini-3.5-flash-lite",
+    "sources": {
+      "AI + calculator agree": 25
+    }
+  },
   "12": {
     "ai_error": false,
     "guessed": 0,
