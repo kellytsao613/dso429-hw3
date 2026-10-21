@@ -1,0 +1,32 @@
+# Round 141
+Released 2026-10-21T17:01:39Z - answered 2026-10-21 17:06 UTC - model: gemini-3.5-flash-lite
+
+Sources: AI + calculator agree: 24, calculator (overrode AI): 1
+
+| # | Question | AI | Calculator | Final | Source | AI work |
+|---|---|---|---|---|---|---|
+| q1 | A monthly headcount series runs 14, 25, 36, 47, 58. If the pattern continues, what is the next value? | C | C | **C** | AI + calculator agree | The sequence increases by 11 each time (14, 25, 36, 47, 58). Next is 58 + 11 = 69. |
+| q2 | A retailer sells 384 units at $14.32 each. What is total revenue? | B | D | **D** | calculator (overrode AI) | 384 * 14.32 = 5,882.88 |
+| q3 | A support queue holds 20 billing tickets, 11 technical tickets and 7 account tickets. If one is drawn at random, what is the probability it is a billing ticket? | C | C | **C** | AI + calculator agree | Total = 20 + 11 + 7 = 38. Probability = 20 / 38 = 0.5263 or 52.6%. |
+| q4 | A $660.00 marketing budget is split between two channels in the ratio 2:3. What does the first channel receive? | A | A | **A** | AI + calculator agree | First channel gets (2 / (2 + 3)) * 660 = (2 / 5) * 660 = 264.00 |
+| q5 | Quarterly revenue moved from $3,950.00 to $6,105.00. What is the percentage change? | C | C | **C** | AI + calculator agree | Percentage change = (6,105 - 3,950) / 3,950 = 2,155 / 3,950 = 0.54557... = 54.6% |
+| q6 | Region A had 161 orders averaging $61.00; region B had 97 orders averaging $90.00. What is the overall average order value? | A | A | **A** | AI + calculator agree | Total revenue = (161 * 61) + (97 * 90) = 9,821 + 8,730 = 18,551. Total orders = 161 + 97 = 258. Average = 18,551 / 258 = 71.90 |
+| q7 | A product line generates $29,250.00 in revenue against $23,519.83 in cost of goods sold. What is the gross margin? | B | B | **B** | AI + calculator agree | Gross margin = (Revenue - COGS) / Revenue = (29,250 - 23,519.83) / 29,250 = 5,730.17 / 29,250 = 0.19589 = 19.6% |
+| q8 | An invoice for $327.78 is converted to euros at 0.6223 euros per US dollar. How many euros is that? | A | A | **A** | AI + calculator agree | 327.78 * 0.6223 = 203.9789... rounds to 203.98 |
+| q9 | An investment of $39,000.00 grows at 7% compounded annually. What is its value after 4 years? | C | C | **C** | AI + calculator agree | Future value = 39,000 * (1 + 0.07)^4 = 39,000 * 1.310796 = 51,121.04 |
+| q10 | A contract signed on 27 April 2026 has a 204-day settlement period. On what date does it settle? | B | B | **B** | AI + calculator agree | Remaining days in April = 3 days (30 - 27). May (31), Jun (30), Jul (31), Aug (31), Sep (30), Oct (31). Sum = 3+31+30+31+31+30+31 = 187. Remaining from 204 = 17 days in November. Date: 17 November 2026. |
+| q11 | Region A had 67 orders averaging $74.00; region B had 128 orders averaging $28.00. What is the overall average order value? | D | D | **D** | AI + calculator agree | Total revenue = (67 * 74) + (128 * 28) = 4,958 + 3,584 = 8,542. Total orders = 67 + 128 = 195. Average = 8,542 / 195 = 43.805... = 43.81 |
+| q12 | A $660.00 marketing budget is split between two channels in the ratio 4:7. What does the first channel receive? | D | D | **D** | AI + calculator agree | First channel gets (4 / (4 + 7)) * 660 = (4 / 11) * 660 = 240.00 |
+| q13 | Quarterly revenue moved from $1,950.00 to $1,562.00. What is the percentage change? | D | D | **D** | AI + calculator agree | Percentage change = (1,562 - 1,950) / 1,950 = -388 / 1,950 = -0.19897... = -19.9% |
+| q14 | An item listed at $710.02 is discounted by 30%. What is the sale price? | A | A | **A** | AI + calculator agree | Sale price = 710.02 * (1 - 0.30) = 710.02 * 0.70 = 497.014... = 497.01 |
+| q15 | A product line generates $56,000.00 in revenue against $51,038.05 in cost of goods sold. What is the gross margin? | C | C | **C** | AI + calculator agree | Gross margin = (56,000 - 51,038.05) / 56,000 = 4,961.95 / 56,000 = 0.0886 = 8.9% |
+| q16 | A product line generates $44,750.00 in revenue against $31,211.39 in cost of goods sold. What is the gross margin? | C | C | **C** | AI + calculator agree | Gross margin = (44,750 - 31,211.39) / 44,750 = 13,538.61 / 44,750 = 0.3025 = 30.3% |
+| q17 | A contract signed on 29 June 2026 has a 211-day settlement period. On what date does it settle? | B | B | **B** | AI + calculator agree | Remaining in June = 1 July (June has 30 days, 30-29=1). Remaining: 211 - 1 = 210 days. July(31), Aug(31), Sep(30), Oct(31), Nov(30), Dec(31), Jan(26). Sum = 31+31+30+31+30+31+26 = 210. Date: 26 January 2027. |
+| q18 | An invoice for $4,524.28 is converted to euros at 1.5748 euros per US dollar. How many euros is that? | D | D | **D** | AI + calculator agree | 4,524.28 * 1.5748 = 7,124.8397... = 7,124.84 |
+| q19 | A support queue holds 4 billing tickets, 3 technical tickets and 7 account tickets. If one is drawn at random, what is the probability it is a billing ticket? | B | B | **B** | AI + calculator agree | Total tickets = 4 + 3 + 7 = 14. Probability = 4 / 14 = 0.2857 = 28.6% |
+| q20 | An invoice for $2,900.27 is converted to euros at 1.6143 euros per US dollar. How many euros is that? | B | B | **B** | AI + calculator agree | 2,900.27 * 1.6143 = 4,681.906... = 4,681.91 |
+| q21 | Fixed costs are $46,500.00. Each unit sells for $34.00 with a variable cost of $8.00. How many units must be sold to break even, to the nearest unit? | D | D | **D** | AI + calculator agree | Contribution margin = 34 - 8 = 26. Break-even units = 46,500 / 26 = 1,788.46... = 1,788 units |
+| q22 | An item listed at $169.28 is discounted by 35%. What is the sale price? | B | B | **B** | AI + calculator agree | Sale price = 169.28 * (1 - 0.35) = 169.28 * 0.65 = 110.032 = 110.03 |
+| q23 | A product line generates $47,500.00 in revenue against $37,000.75 in cost of goods sold. What is the gross margin? | A | A | **A** | AI + calculator agree | Gross margin = (47,500 - 37,000.75) / 47,500 = 10,499.25 / 47,500 = 0.2210 = 22.1% |
+| q24 | A support queue holds 20 billing tickets, 24 technical tickets and 9 account tickets. If one is drawn at random, what is the probability it is a billing ticket? | C | C | **C** | AI + calculator agree | Total tickets = 20 + 24 + 9 = 53. Probability = 20 / 53 = 0.3773 = 37.7% |
+| q25 | An investment of $40,500.00 grows at 2% compounded annually. What is its value after 6 years? | A | A | **A** | AI + calculator agree | Future value = 40,500 * (1 + 0.02)^6 = 40,500 * 1.1261624 = 45,609.58 |
