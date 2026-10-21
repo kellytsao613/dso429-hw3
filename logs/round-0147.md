@@ -1,0 +1,32 @@
+# Round 147
+Released 2026-10-21T23:01:41Z - answered 2026-10-21 23:03 UTC - model: gemini-3.5-flash-lite
+
+Sources: AI + calculator agree: 25
+
+| # | Question | AI | Calculator | Final | Source | AI work |
+|---|---|---|---|---|---|---|
+| q1 | A monthly headcount series runs 8, 23, 38, 53, 68. If the pattern continues, what is the next value? | B | B | **B** | AI + calculator agree | The sequence increases by 15 each time (8, 23, 38, 53, 68). Next value = 68 + 15 = 83. |
+| q2 | A $8,610.00 marketing budget is split between two channels in the ratio 2:3. What does the first channel receive? | C | C | **C** | AI + calculator agree | Total parts = 2 + 3 = 5. First channel = 2/5 * 8,610 = $3,444.00. |
+| q3 | Quarterly revenue moved from $2,600.00 to $3,911.00. What is the percentage change? | A | A | **A** | AI + calculator agree | Percentage change = (3,911 - 2,600) / 2,600 = 1,311 / 2,600 = 0.50423 -> 50.4%. |
+| q4 | An item listed at $30.97 is discounted by 10%. What is the sale price? | B | B | **B** | AI + calculator agree | Sale price = $30.97 * (1 - 0.10) = $30.97 * 0.9 = $27.873 -> $27.87. |
+| q5 | An investment of $25,500.00 grows at 6% compounded annually. What is its value after 7 years? | D | D | **D** | AI + calculator agree | Value = $25,500 * (1 + 0.06)^7 = $25,500 * 1.503616 = $38,342.21 (Wait, 1.06^7 = 1.50363, 25500 * 1.50363025 = 38342.57). |
+| q6 | A product line generates $56,500.00 in revenue against $49,041.11 in cost of goods sold. What is the gross margin? | D | D | **D** | AI + calculator agree | Gross margin = (Revenue - COGS) / Revenue = (56,500 - 49,041.11) / 56,500 = 7,458.89 / 56,500 = 0.132 -> 13.2%. |
+| q7 | An item listed at $201.60 is discounted by 5%. What is the sale price? | C | C | **C** | AI + calculator agree | Sale price = $201.60 * (1 - 0.05) = $201.60 * 0.95 = $191.52. |
+| q8 | An invoice for $8,794.51 is converted to euros at 0.9351 euros per US dollar. How many euros is that? | A | A | **A** | AI + calculator agree | Euros = $8,794.51 * 0.9351 = 8,223.7505 -> 8,223.75. |
+| q9 | Fixed costs are $32,000.00. Each unit sells for $177.00 with a variable cost of $99.00. How many units must be sold to break even, to the nearest unit? | B | B | **B** | AI + calculator agree | Break-even units = Fixed Costs / (Selling Price - Variable Cost) = 32,000 / (177 - 99) = 32,000 / 78 = 410.25 -> 410. |
+| q10 | Region A had 193 orders averaging $76.00; region B had 79 orders averaging $67.00. What is the overall average order value? | A | A | **A** | AI + calculator agree | Overall average = (193 * 76 + 79 * 67) / (193 + 79) = (14,668 + 5,293) / 272 = 19,961 / 272 = 73.386 -> 73.39. |
+| q11 | A retailer sells 286 units at $77.70 each. What is total revenue? | D | D | **D** | AI + calculator agree | Revenue = 286 * $77.70 = $22,222.20. |
+| q12 | A $930.00 marketing budget is split between two channels in the ratio 2:7. What does the first channel receive? | B | B | **B** | AI + calculator agree | Total parts = 2 + 7 = 9. First channel = 2/9 * 930 = 206.666 -> $206.67. |
+| q13 | A retailer sells 801 units at $25.31 each. What is total revenue? | D | D | **D** | AI + calculator agree | Revenue = 801 * $25.31 = $20,273.31. |
+| q14 | Region A had 139 orders averaging $37.00; region B had 96 orders averaging $51.00. What is the overall average order value? | B | B | **B** | AI + calculator agree | Overall average = (139 * 37 + 96 * 51) / (139 + 96) = (5,143 + 4,896) / 235 = 10,039 / 235 = 42.719 -> 42.72. |
+| q15 | A contract signed on 16 July 2026 has a 332-day settlement period. On what date does it settle? | C | C | **C** | AI + calculator agree | July 2026 has 31 days. Remaining in July = 31 - 16 = 15 days. Days left = 332 - 15 = 317. Remainder in non-leap year 2026-2027: Aug(31), Sep(30), Oct(31), Nov(30), Dec(31), Jan(31), Feb(28), Mar(31), Apr(30), May(31) = 304 days. 317 - 304 = 13 days in June -> 13 June 2027. |
+| q16 | Quarterly revenue moved from $3,200.00 to $4,065.00. What is the percentage change? | C | C | **C** | AI + calculator agree | Percentage change = (4,065 - 3,200) / 3,200 = 865 / 3,200 = 0.2703 -> 27.0%. |
+| q17 | Quarterly revenue moved from $2,400.00 to $2,786.00. What is the percentage change? | B | B | **B** | AI + calculator agree | Percentage change = (2,786 - 2,400) / 2,400 = 386 / 2,400 = 0.16083 -> 16.1%. |
+| q18 | A support queue holds 23 billing tickets, 15 technical tickets and 13 account tickets. If one is drawn at random, what is the probability it is a billing ticket? | D | D | **D** | AI + calculator agree | Total = 23 + 15 + 13 = 51. Probability = 23 / 51 = 0.45098 -> 45.1%. |
+| q19 | Region A had 45 orders averaging $94.00; region B had 193 orders averaging $29.00. What is the overall average order value? | D | D | **D** | AI + calculator agree | Overall average = (45 * 94 + 193 * 29) / (45 + 193) = (4,230 + 5,597) / 238 = 9,827 / 238 = 41.289 -> 41.29. |
+| q20 | A $8,760.00 marketing budget is split between two channels in the ratio 2:5. What does the first channel receive? | D | D | **D** | AI + calculator agree | Total parts = 2 + 5 = 7. First channel = 2/7 * 8,760 = 2,502.857 -> $2,502.86. |
+| q21 | A support queue holds 6 billing tickets, 13 technical tickets and 11 account tickets. If one is drawn at random, what is the probability it is a billing ticket? | A | A | **A** | AI + calculator agree | Total = 6 + 13 + 11 = 30. Probability = 6 / 30 = 0.20 = 20.0%. |
+| q22 | Region A had 115 orders averaging $21.00; region B had 83 orders averaging $74.00. What is the overall average order value? | D | D | **D** | AI + calculator agree | Overall average = (115 * 21 + 83 * 74) / (115 + 83) = (2,415 + 6,142) / 198 = 8,557 / 198 = 43.217 -> 43.22. |
+| q23 | Region A had 49 orders averaging $72.00; region B had 12 orders averaging $76.00. What is the overall average order value? | C | C | **C** | AI + calculator agree | Overall average = (49 * 72 + 12 * 76) / (49 + 12) = (3,528 + 912) / 61 = 4,440 / 61 = 72.786 -> 72.79. |
+| q24 | A product line generates $84,250.00 in revenue against $58,959.18 in cost of goods sold. What is the gross margin? | D | D | **D** | AI + calculator agree | Gross margin = (84,250 - 58,959.18) / 84,250 = 25,290.82 / 84,250 = 0.30018 -> 30.0%. |
+| q25 | An investment of $21,000.00 grows at 6% compounded annually. What is its value after 4 years? | A | A | **A** | AI + calculator agree | Value = $21,000 * (1 + 0.06)^4 = $21,000 * 1.26247696 = $26,512.016 -> $26,512.02. |
