@@ -403,6 +403,15 @@
       "calculator (overrode AI)": 1
     }
   },
+  "143": {
+    "ai_error": false,
+    "guessed": 0,
+    "model": "gemini-3.5-flash-lite",
+    "sources": {
+      "AI + calculator agree": 23,
+      "calculator (overrode AI)": 2
+    }
+  },
   "15": {
     "ai_error": false,
     "guessed": 0,
